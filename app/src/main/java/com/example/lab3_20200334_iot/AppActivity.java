@@ -55,6 +55,8 @@ public class AppActivity extends AppCompatActivity {
     NavController navController;
 
     AlertDialog defaultDialog;
+
+    RecyclerViewModel recyclerViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +73,8 @@ public class AppActivity extends AppCompatActivity {
         assert navHostFragment != null;
         navController = navHostFragment.getNavController();
 
-        RecyclerViewModel recyclerViewModel = new ViewModelProvider(AppActivity.this).get(RecyclerViewModel.class);
+        //RecyclerViewModel recyclerViewModel = new ViewModelProvider(AppActivity.this).get(RecyclerViewModel.class);
+        recyclerViewModel = new ViewModelProvider(AppActivity.this).get(RecyclerViewModel.class);
         recyclerViewModel.getListaMagnetoFragment().setValue(listaMagnetoFragment);
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
@@ -116,6 +119,11 @@ public class AppActivity extends AppCompatActivity {
         binding.button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+                binding.button3.setEnabled(false);
+                binding.button3.setAlpha(0.5f);
+                binding.buttonNavFragment.setEnabled(false);
+                binding.buttonNavFragment.setAlpha(0.5f);
                 fetchWebServiceUserData();
             }
         });
@@ -140,6 +148,11 @@ public class AppActivity extends AppCompatActivity {
             userService.getUserInfo().enqueue(new Callback<RootPojo>() {
                 @Override
                 public void onResponse(@NonNull Call<RootPojo> call, @NonNull Response<RootPojo> response) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    binding.button3.setEnabled(true);
+                    binding.button3.setAlpha(1.0f);
+                    binding.buttonNavFragment.setEnabled(true);
+                    binding.buttonNavFragment.setAlpha((1.0f));
                     //aca estoy en el UI Thread
                     if(response.isSuccessful()){
                         RootPojo rootPojo = response.body();
@@ -151,7 +164,7 @@ public class AppActivity extends AppCompatActivity {
 
                                 listaMagnetoFragment.add(user);
 
-                                RecyclerViewModel recyclerViewModel = new ViewModelProvider(AppActivity.this).get(RecyclerViewModel.class);
+                                //RecyclerViewModel recyclerViewModel = new ViewModelProvider(AppActivity.this).get(RecyclerViewModel.class);
                                 recyclerViewModel.getListaMagnetoFragment().setValue(listaMagnetoFragment);
                                 getSupportFragmentManager().beginTransaction()
                                         .setReorderingAllowed(true)
@@ -161,7 +174,7 @@ public class AppActivity extends AppCompatActivity {
                                 Log.d("msg-test","Actualmente en AcelerometroFragment");
                                 listaAccelereFragment.add(user);
 
-                                RecyclerViewModel recyclerViewModel = new ViewModelProvider(AppActivity.this).get(RecyclerViewModel.class);
+                                //RecyclerViewModel recyclerViewModel = new ViewModelProvider(AppActivity.this).get(RecyclerViewModel.class);
                                 recyclerViewModel.getListaAccelereFragment().setValue(listaAccelereFragment);
                                 getSupportFragmentManager().beginTransaction()
                                         .setReorderingAllowed(true)
@@ -174,7 +187,13 @@ public class AppActivity extends AppCompatActivity {
                 }
                 @Override
                 public void onFailure(@NonNull Call<RootPojo> call, @NonNull Throwable t) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    binding.button3.setEnabled(true);
+                    binding.button3.setAlpha(1.0f);
+                    binding.buttonNavFragment.setEnabled(true);
+                    binding.buttonNavFragment.setAlpha((1.0f));
                     Log.d("msg-test", "FALLO CONSULTA API");
+                    Toast.makeText(AppActivity.this, "FALLO CONSULTA API. Vuelva a intentar", Toast.LENGTH_SHORT).show();
                 }
             });
         } else {

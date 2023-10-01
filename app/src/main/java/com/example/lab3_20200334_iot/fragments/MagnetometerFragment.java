@@ -17,6 +17,7 @@ import com.example.lab3_20200334_iot.R;
 import com.example.lab3_20200334_iot.adapters.UsersAdapter;
 import com.example.lab3_20200334_iot.databinding.FragmentMagnetometerBinding;
 import com.example.lab3_20200334_iot.pojos.Result;
+import com.example.lab3_20200334_iot.sensorListeners.MangnetoManager;
 import com.example.lab3_20200334_iot.viewmodels.RecyclerViewModel;
 
 import java.util.ArrayList;
@@ -28,10 +29,18 @@ public class MagnetometerFragment extends Fragment {
     FragmentMagnetometerBinding binding;
     UsersAdapter adapter;
 
+    MangnetoManager magnetoManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMagnetometerBinding.inflate(inflater,container,false);
+
+        // Inicializar MagnetometroManager
+        magnetoManager = new MangnetoManager(getContext(),binding.rvMagneto);
+
+        // Iniciar el monitoreo del magnetómetro
+        magnetoManager.iniciar();
 
         RecyclerViewModel recyclerViewModel = new ViewModelProvider(getActivity()).get(RecyclerViewModel.class);
 
@@ -70,5 +79,18 @@ public class MagnetometerFragment extends Fragment {
         });*/
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        magnetoManager.detener();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        magnetoManager.iniciar();
     }
 }

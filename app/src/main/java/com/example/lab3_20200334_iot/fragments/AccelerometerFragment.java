@@ -34,8 +34,6 @@ public class AccelerometerFragment extends Fragment {
     FragmentAccelerometerBinding binding;
     UsersAdapter adapter;
 
-    SensorManager mSensorManager;
-    SensorAccListener listener = new SensorAccListener();
 
     AccManager accManager;
 
