@@ -100,7 +100,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
         TextView phone = holder.itemView.findViewById(R.id.phone);
         phone.setText("Phone: " +u.getPhone());
 
-        String urlAvatar = u.getPicture().getThumbnail();
+        String urlAvatar = u.getPicture().getLarge();
         ImageView fotoPerfil = holder.itemView.findViewById(R.id.fotoPerfil);
         Glide.with(context).load(urlAvatar).into(fotoPerfil);
 

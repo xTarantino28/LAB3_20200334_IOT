@@ -81,7 +81,7 @@ public class AppActivity extends AppCompatActivity {
         Log.d("msg-test",currentdestinatio);*/
         binding.buttonNavFragment.setOnClickListener( view -> {
             if (navController.getCurrentDestination().getId() == R.id.magnetometerFragment)   {
-                binding.buttonNavFragment.setText("Ir a Acelerómetro");
+                binding.buttonNavFragment.setText("Ir a Magnetómetro");
                 Log.d("msg-test","Actualmente en MagnetometroFragment");
 
                 //RecyclerViewModel recyclerViewModel = new ViewModelProvider(AppActivity.this).get(RecyclerViewModel.class);
@@ -90,20 +90,19 @@ public class AppActivity extends AppCompatActivity {
                         .setReorderingAllowed(true)
                         .add(R.id.nav_host_fragment, AccelerometerFragment.class, null)
                         .commit();
-                navController.navigate(MagnetometerFragmentDirections.actionMagnetometerFragmentToAccelerometerFragment());
-
+                navController.navigate(R.id.action_magnetometerFragment_to_accelerometerFragment);
 
             } else { //LA OTRA OPCION ES UNICAMENTE ACCELEROMETER FRAGMENT
                 Log.d("msg-test","Actualmente en AcelerometroFragment");
-                binding.buttonNavFragment.setText("Ir a Magnetómetro");
+                binding.buttonNavFragment.setText("Ir a Acelerometro");
                 //RecyclerViewModel recyclerViewModel = new ViewModelProvider(AppActivity.this).get(RecyclerViewModel.class);
+
                 recyclerViewModel.getListaMagnetoFragment().setValue(listaMagnetoFragment);
                 getSupportFragmentManager().beginTransaction()
                         .setReorderingAllowed(true)
                         .add(R.id.nav_host_fragment, MagnetometerFragment.class, null)
                         .commit();
-                navController.navigate(AccelerometerFragmentDirections.actionAccelerometerFragmentToMagnetometerFragment());
-
+                navController.navigate(R.id.action_accelerometerFragment_to_magnetometerFragment);
             }
         });
 
@@ -121,7 +120,7 @@ public class AppActivity extends AppCompatActivity {
     public void fetchWebServiceUserData() {
 
         if(tengoInternet()){
-            Log.d("msg-test", "HOLLAAAAA");
+            Log.d("msg-test", "SI TENGO INTERNET PASADO CONDICIONAL ");
 
             userService.getUserInfo().enqueue(new Callback<RootPojo>() {
                 @Override
@@ -131,7 +130,7 @@ public class AppActivity extends AppCompatActivity {
                         RootPojo rootPojo = response.body();
                         if (rootPojo != null) {
                             user = rootPojo.getResults().get(0);
-                            Log.d("msg-test", "ASJIGNASGOIANSASGASGAGAS");
+                            Log.d("msg-test", "RESPUESTA DE API");
                             if(navController.getCurrentDestination().getId() == R.id.magnetometerFragment)   {
                                 Log.d("msg-test","Actualmente en MagnetometroFragment");
 

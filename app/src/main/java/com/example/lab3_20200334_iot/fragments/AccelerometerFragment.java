@@ -38,8 +38,8 @@ public class AccelerometerFragment extends Fragment {
             adapter = new UsersAdapter(listaUsers,container.getContext());
             //adapter.setContext(container.getContext());
             adapter.setListUsers(listaUsers);
-            adapter.notifyDataSetChanged();
             binding.rvAcceler.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
             adapter.setOnItemClickListener(new UsersAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {

@@ -11,7 +11,11 @@
         tools:layout="@layout/fragment_magnetometer" >
         <action
             android:id="@+id/action_magnetometerFragment_to_accelerometerFragment"
-            app:destination="@id/accelerometerFragment" />
+            app:destination="@id/accelerometerFragment"
+            app:popUpTo="@+id/magnetometerFragment"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true"
+            />
     </fragment>
     <fragment
         android:id="@+id/accelerometerFragment"
@@ -21,7 +25,9 @@
         <action
             android:id="@+id/action_accelerometerFragment_to_magnetometerFragment"
             app:destination="@id/magnetometerFragment"
-            app:popUpTo="@+id/magnetometerFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpTo="@+id/accelerometerFragment"
+            app:popUpToInclusive="true"
+            app:popUpToSaveState="true"
+            app:restoreState="true"            />
     </fragment>
 </navigation>
