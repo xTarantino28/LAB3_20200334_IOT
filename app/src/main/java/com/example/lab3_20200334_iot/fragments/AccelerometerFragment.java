@@ -1,23 +1,31 @@
 package com.example.lab3_20200334_iot.fragments;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.lab3_20200334_iot.AppActivity;
 import com.example.lab3_20200334_iot.R;
 import com.example.lab3_20200334_iot.adapters.UsersAdapter;
 import com.example.lab3_20200334_iot.databinding.FragmentAccelerometerBinding;
 import com.example.lab3_20200334_iot.pojos.Result;
+import com.example.lab3_20200334_iot.sensorListeners.AccManager;
+import com.example.lab3_20200334_iot.sensorListeners.SensorAccListener;
 import com.example.lab3_20200334_iot.viewmodels.RecyclerViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -26,6 +34,10 @@ public class AccelerometerFragment extends Fragment {
     FragmentAccelerometerBinding binding;
     UsersAdapter adapter;
 
+    SensorManager mSensorManager;
+    SensorAccListener listener = new SensorAccListener();
+
+    AccManager accManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +65,8 @@ public class AccelerometerFragment extends Fragment {
         });
 
 
+
+
         /*
         recyclerViewModel.getResultMutableLiveDataAccele().observe(getViewLifecycleOwner(), user -> {
             //UsersAdapter adapter = new UsersAdapter();
@@ -67,6 +81,17 @@ public class AccelerometerFragment extends Fragment {
 
         });*/
 
+        // Inicializar AcelerometroManager
+        accManager = new AccManager(getContext(),binding.rvAcceler);
+        // Iniciar el monitoreo del acelerómetro
+        accManager.iniciar();
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        accManager.detener();
     }
 }

@@ -10,6 +10,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import com.example.lab3_20200334_iot.fragments.MagnetometerFragment;
 import com.example.lab3_20200334_iot.fragments.MagnetometerFragmentDirections;
 import com.example.lab3_20200334_iot.pojos.Result;
 import com.example.lab3_20200334_iot.pojos.RootPojo;
+import com.example.lab3_20200334_iot.sensorListeners.SensorAccListener;
 import com.example.lab3_20200334_iot.viewmodels.RecyclerViewModel;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -41,7 +44,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppActivity extends AppCompatActivity {
-
     ActivityAppBinding binding;
     UserService userService;
 
