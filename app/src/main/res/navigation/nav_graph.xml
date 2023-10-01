@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/magnetometerFragment">
+    <fragment
+        android:id="@+id/magnetometerFragment"
+        android:name="com.example.lab3_20200334_iot.fragments.MagnetometerFragment"
+        android:label="fragment_magnetometer"
+        tools:layout="@layout/fragment_magnetometer" >
+        <action
+            android:id="@+id/action_magnetometerFragment_to_accelerometerFragment"
+            app:destination="@id/accelerometerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accelerometerFragment"
+        android:name="com.example.lab3_20200334_iot.fragments.AccelerometerFragment"
+        android:label="fragment_accelerometer"
+        tools:layout="@layout/fragment_accelerometer" >
+        <action
+            android:id="@+id/action_accelerometerFragment_to_magnetometerFragment"
+            app:destination="@id/magnetometerFragment"
+            app:popUpTo="@+id/magnetometerFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+</navigation>
