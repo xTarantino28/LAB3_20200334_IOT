@@ -1,6 +1,7 @@
 package com.example.lab3_20200334_iot;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -8,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import com.example.lab3_20200334_iot.fragments.MagnetometerFragmentDirections;
 import com.example.lab3_20200334_iot.pojos.Result;
 import com.example.lab3_20200334_iot.pojos.RootPojo;
 import com.example.lab3_20200334_iot.viewmodels.RecyclerViewModel;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -48,6 +51,8 @@ public class AppActivity extends AppCompatActivity {
     Result user;
 
     NavController navController;
+
+    AlertDialog defaultDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +119,14 @@ public class AppActivity extends AppCompatActivity {
         });
 
 
+        binding.imageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("msg-test", "ImageVIew oon click");
+                openDialog();
+            }
+        });
+
     }
 
 
@@ -179,5 +192,36 @@ public class AppActivity extends AppCompatActivity {
         Log.d("msg-test", "Internet: " + tieneInternet);
 
         return tieneInternet;
+    }
+
+    public void openDialog() {
+        //builder = new AlertDialog.Builder(AppActivity.this);
+        if (navController.getCurrentDestination().getId() == R.id.magnetometerFragment)   {
+            defaultDialog = new MaterialAlertDialogBuilder(AppActivity.this)
+                    .setTitle("Detalles - Magnetometro")
+                        .setMessage("Haga CLICK en 'Añadir' para agregar contactos a su lista. Esta aplicación está utilizando el MAGNETÓMETRO de su dispositivo.\n\n" + "De esta forma, se mostrará el 100% cuando se apunte al NORTE. Caso contrario, se desvanecerá. ")
+                        .setCancelable(true)
+                        .setNegativeButton("Aceptar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        })
+                        .show();
+
+
+        } else {
+            defaultDialog = new MaterialAlertDialogBuilder(AppActivity.this)
+                    .setTitle("Detalles - Acelerometro")
+                    .setMessage("Haga CLICK en 'Añadir' para agregar contactos a su lista. Esta aplicación está utilizando el MAGNETÓMETRO de su dispositivo.\n\n" + "De esta forma, la lista hará scroll hacia abajo cuando agite su dispositivo.")
+                    .setCancelable(true)
+                    .setNegativeButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    })
+                    .show();
+        }
     }
 }
