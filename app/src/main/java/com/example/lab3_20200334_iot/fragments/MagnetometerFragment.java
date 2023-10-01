@@ -39,7 +39,7 @@ public class MagnetometerFragment extends Fragment {
         // Inicializar MagnetometroManager
         magnetoManager = new MangnetoManager(getContext(),binding.rvMagneto);
 
-        // Iniciar el monitoreo del magnetómetro
+        // Iniciar el monitoreo del magnetómetro. commit magnetometro
         magnetoManager.iniciar();
 
         RecyclerViewModel recyclerViewModel = new ViewModelProvider(getActivity()).get(RecyclerViewModel.class);
